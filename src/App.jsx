@@ -1,8 +1,20 @@
 import { useState } from 'react'
+import Button from './components/ui/Button'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [mood, setMood] = useState('😊')
+
+  const handleReset = () => {
+    setCount(0)
+    setMood('😊')
+  }
+
+  const handleCelebrate = () => {
+    setMood('🎉')
+    setTimeout(() => setMood('😊'), 2000)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-phoenix-50 to-phoenix-100 flex items-center justify-center">
@@ -21,17 +33,50 @@ function App() {
             Rise from the ashes stronger than ever
           </p>
           
-          {/* Interactive Button */}
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-phoenix-500 hover:bg-phoenix-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 phoenix-glow"
-          >
-            Days Clean: {count}
-          </button>
+          {/* Days Counter */}
+          <div className="bg-phoenix-50 rounded-lg p-4 mb-6">
+            <h2 className="text-lg font-semibold text-phoenix-800 mb-2">
+              Days Clean: {count}
+            </h2>
+            <div className="text-3xl mb-2">{mood}</div>
+            <p className="text-sm text-phoenix-600">
+              {count === 0 ? 'Start your journey!' : 
+               count === 1 ? 'Great start!' : 
+               count < 7 ? 'Building momentum!' : 
+               count < 30 ? 'Amazing progress!' : 
+               'You\'re unstoppable!'}
+            </p>
+          </div>
           
-          {/* Motivational Message */}
-          <p className="text-sm text-gray-500 mt-4">
-            Every day is a victory! 🎉
+          {/* Buttons using our new component */}
+          <div className="space-y-3">
+            <Button 
+              onClick={() => setCount(count + 1)}
+              variant="primary"
+            >
+              ➕ Add Day
+            </Button>
+            
+            <div className="flex space-x-3">
+              <Button 
+                onClick={handleCelebrate}
+                variant="secondary"
+              >
+                🎉 Celebrate
+              </Button>
+              
+              <Button 
+                onClick={handleReset}
+                variant="danger"
+              >
+                🔄 Reset
+              </Button>
+            </div>
+          </div>
+          
+          {/* Footer */}
+          <p className="text-sm text-gray-500 mt-6">
+            Every day is a victory! 💪
           </p>
         </div>
       </div>
